@@ -13,6 +13,9 @@ import { TreatmentPlanComponent } from './components/treatment-plan/treatment-pl
 import { VeteranProfileComponent } from './components/veteran-profile/veteran-profile.component';
 import { VeteranRoutingModule } from './veteran-routing.module';
 import { VeteranComponent } from './veteran.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+
+export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { VeteranComponent } from './veteran.component';
     HttpClientModule,
     RadioButtonModule,
     RxReactiveFormsModule,
+    NgxMaskModule.forRoot()
   ],
 })
 export class VeteranModule {}
