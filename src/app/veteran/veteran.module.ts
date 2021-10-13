@@ -15,13 +15,9 @@ import { TreatmentPlanComponent } from './components/treatment-plan/treatment-pl
 import { VeteranProfileComponent } from './components/veteran-profile/veteran-profile.component';
 import { VeteranRoutingModule } from './veteran-routing.module';
 import { VeteranComponent } from './veteran.component';
-import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { ToggleButtonModule } from 'primeng/togglebutton';
-
 import { ToolbarModule } from 'primeng/toolbar';
-
-
-export let options: Partial<IConfig> | (() => Partial<IConfig>);
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 @NgModule({
   declarations: [
