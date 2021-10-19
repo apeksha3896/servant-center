@@ -79,7 +79,9 @@ export class VeteranComponent implements OnInit {
     console.log('abkh');
   }
 
-  activeMenu(event: any) {
-    if (window.innerWidth < 768) this.displayMenu = !this.displayMenu;
+  
+  activeMenu(event:any) {
+    if(window.innerWidth < 768)
+     this.displayMenu = !this.displayMenu;
   }
 }

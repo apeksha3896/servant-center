@@ -9,6 +9,7 @@ import {
   races,
   statuses,
 } from '../../app.constants';
+
 import { VeteranprofileService } from '../../services/veteranprofile.service';
 
 interface State {
@@ -31,7 +32,6 @@ interface Status {
   name: string;
 }
 
-
 interface Relation {
   name: string;
 }
@@ -40,29 +40,25 @@ interface Race {
   name: string;
 }
 
-
-
 @Component({
   selector: 'app-veteran-profile',
   templateUrl: './veteran-profile.component.html',
   styleUrls: ['./veteran-profile.component.scss'],
 })
 export class VeteranProfileComponent implements OnInit {
-
-
   veteranProfileForm!: FormGroup;
   submitted: boolean = false;
   states: State[];
   relegions: Relegion[];
   languages: Language[];
-  maritalStatus : Status[];
-  relations : Relation[];
-  races : Race[];
+  maritalStatus: Status[];
+  relations: Relation[];
+  races: Race[];
   selectedState!: State;
   selectedLanguage!: Language;
   veteran: any;
-  selectedGender: any = null; 
-  selectedMaritalStatus! : Status;
+  selectedGender: any = null;
+  selectedMaritalStatus!: Status;
   public customPatterns = { '0': { pattern: new RegExp('[a-zA-Z]') } };
   genders: Gender[];
 
@@ -95,19 +91,18 @@ export class VeteranProfileComponent implements OnInit {
   primaryLanguage: any;
   relegiousPreferences: any;
   hobbies: any;
-  selectedRelationship : any;
+  selectedRelationship: any;
   contactPersonCity: any;
   contactPersonState: any;
   contactPersonZip: any;
   contactPersonPhoneNumber: any;
   contactPersonHouseNumber: any;
   contactPersonRelationship: any;
-  selectedRace : any;
-  race : any;
+  selectedRace: any;
+  race: any;
   contactPersonStreetName: any;
   name: any;
   maxDateValue: Date;
-  invalidDates: Array<Date>
 
   constructor(
     private formBuilder: FormBuilder,
@@ -121,10 +116,6 @@ export class VeteranProfileComponent implements OnInit {
     this.relations = relations;
     this.races = races;
     this.maxDateValue = new Date(new Date().getTime());
-    let today = new Date();
-    let invalidDate = new Date();
-    invalidDate.setDate(today.getDate());
-    this.invalidDates = [today,invalidDate];
   }
 
   ngOnInit(): void {
@@ -141,6 +132,7 @@ export class VeteranProfileComponent implements OnInit {
       this.intakeDOB = this.veteran.intakeDOB;
       this.veteranId = this.veteran.veteranId;
       this.firstName = this.veteran.firstName;
+      console.log(this.firstName)
       this.middleName = this.veteran.middleName;
       this.lastName = this.veteran.lastName;
       this.nickName = this.veteran.nickName;
@@ -152,16 +144,17 @@ export class VeteranProfileComponent implements OnInit {
       this.contactPersonMiddleName = this.veteran.contactPersonMiddleName;
       this.contactPersonLastName = this.veteran.contactPersonLastName;
       this.address1 = this.veteran.address1;
+      console.log(this.address1)
       this.address2 = this.veteran.address2;
       this.country = this.veteran.country;
       this.city = this.veteran.city;
       this.state = this.veteran.state;
-      
+
       this.zipCode = this.veteran.zipCode;
-      
+
       this.ssnNumber = this.veteran.ssnNumber;
       this.hmisIdNo = this.veteran.hmisIdNo;
-      
+      this.race = this.veteran.race;
       this.relegiousPreferences = this.veteran.relegiousPreferences;
       this.hobbies = this.veteran.hobbies;
       this.contactPersonStreetName = this.veteran.contactPersonStreetName;
@@ -183,20 +176,21 @@ export class VeteranProfileComponent implements OnInit {
       recordNo: [this.recordNo],
       intakeDOB: [this.intakeDOB, Validators.required],
       caseManager: [this.caseManager, Validators.required],
-      veteranId: [this.veteranId, Validators.required],
+      veteranId: [this.veteranId],
       firstName: [
         this.firstName,
         [
           Validators.required,
           Validators.minLength(4),
           Validators.nullValidator,
+          Validators.pattern('[a-zA-Z][a-zA-Z ]+'),
         ],
       ],
       middleName: [this.middleName],
       lastName: [this.lastName, [Validators.required, Validators.minLength(4)]],
       nickName: [this.nickName, Validators.required],
       DOB: [this.dob, Validators.required],
-      POB: [this.pob, [Validators.required,Validators.minLength(2)]],
+      POB: [this.pob, [Validators.required, Validators.minLength(2)]],
 
       emailId: [
         this.emailId,
@@ -205,20 +199,22 @@ export class VeteranProfileComponent implements OnInit {
           Validators.pattern('/^[a-z]+[a-z0-9._]+@[a-z]+/.[a-z.]{2,5}$/'),
         ],
       ],
-      phoneNumber: [this.phoneNumber],
+
+      phoneNumber: [this.phoneNumber, Validators.required],
 
       cfirstName: [
         this.contactPersonFirstName,
         [Validators.required, Validators.minLength(3)],
       ],
-      cmiddleName: [this.contactPersonMiddleName,Validators.required,Validators.minLength(3)],
-      clastName: [
-        this.contactPersonLastName,
+      cmiddleName: [
+        this.contactPersonMiddleName,
         Validators.required,
+        Validators.minLength(3),
       ],
+      clastName: [this.contactPersonLastName, Validators.required],
 
-      address1: [this.address1, [Validators.required,Validators.minLength(4)]],
-      city: [this.city,  [Validators.required,Validators.minLength(4)]],
+      address1: [this.address1, [Validators.required, Validators.minLength(4)]],
+      city: [this.city, [Validators.required, Validators.minLength(4)]],
       selectedState: [this.state, Validators.required],
       selectedRelationship: [
         this.contactPersonRelationship,
@@ -226,12 +222,15 @@ export class VeteranProfileComponent implements OnInit {
       ],
       country: [this.country, Validators.required],
       address2: [this.address2, Validators.required],
-      zipCode: [this.zipCode, [Validators.required,Validators.minLength(5)]],
+      zipCode: [this.zipCode, [Validators.required, Validators.minLength(5)]],
 
       selectedGender: [this.gender, Validators.required],
-      selectedMaritalStatus : [this.maritalStatus, Validators.required],
-      SSNNumber: [this.ssnNumber, [Validators.required,Validators.minLength(5)]],
-      hmisIdNo: [this.hmisIdNo, Validators.required],
+      selectedMaritalStatus: [this.maritalStatus, Validators.required],
+      SSNNumber: [
+        this.ssnNumber,
+        [Validators.required, Validators.minLength(11)],
+      ],
+      hmisIdNo: [this.hmisIdNo, [Validators.required, Validators.minLength(9)]],
 
       primaryLanguage: [this.language, Validators.required],
       relegiousPreferences: [this.relegiousPreferences, Validators.required],
@@ -253,7 +252,6 @@ export class VeteranProfileComponent implements OnInit {
         [Validators.required, Validators.minLength(10)],
       ],
       selectedRace: [this.selectedRace, Validators.required],
-      
     });
   }
 
@@ -270,7 +268,28 @@ export class VeteranProfileComponent implements OnInit {
     console.log(this.veteranProfileForm.value);
   }
 
-  resetForm(){
-    this.veteranProfileForm.reset();
+  resetForm() {
+      // this.veteranProfileForm.controls['middleName'].reset(),
+      this.veteranProfileForm.controls['firstName'].reset(this.firstName),
+      this.veteranProfileForm.controls['address2'].reset(),
+      this.veteranProfileForm.controls['address1'].reset(this.address1)
+      
+      // this.veteranProfileForm.controls['nickName'].reset();
+      // this.veteranProfileForm.controls['nursingNotified'].reset(),
+      // this.veteranProfileForm.controls['by'].reset(),
+      // this.veteranProfileForm.controls['date'].reset();
+      // this.veteranProfileForm.controls['nursingNotified'].reset(),
+      // this.veteranProfileForm.controls['by'].reset(),
+      // this.veteranProfileForm.controls['date'].reset();
+      // this.veteranProfileForm.controls['nursingNotified'].reset(),
+      // this.veteranProfileForm.controls['by'].reset(),
+      // this.veteranProfileForm.controls['date'].reset();
+      // this.veteranProfileForm.controls['nursingNotified'].reset(),
+      // this.veteranProfileForm.controls['by'].reset(),
+      // this.veteranProfileForm.controls['date'].reset();
+      // this.veteranProfileForm.controls['nursingNotified'].reset(),
+      // this.veteranProfileForm.controls['by'].reset(),
+      // this.veteranProfileForm.controls['date'].reset();
+      
   }
 }

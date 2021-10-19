@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { Directive, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -26,6 +26,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ItemHeaderComponent } from './components/item-header/item-header.component';
 import { WelcomeHeaderComponent } from './components/welcome-header/welcome-header.component';
+import { NoSpecialSymbolsDirective } from './directives/no-special-symbols.directive';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -59,6 +60,7 @@ const COMPONENTS = [
   WelcomeHeaderComponent,
   KeysPipe,
   ConsentDataComponent,
+  NoSpecialSymbolsDirective
 ];
 
 @NgModule({

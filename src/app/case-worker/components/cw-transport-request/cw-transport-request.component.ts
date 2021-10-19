@@ -1,5 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { TransportService } from '../../services/transport.service';
 
 @Component({
@@ -8,41 +13,32 @@ import { TransportService } from '../../services/transport.service';
   styleUrls: ['./cw-transport-request.component.scss'],
 })
 export class CwTransportRequestComponent implements OnInit {
-
- 
   submitted = false;
   mobileMode = false;
-  minDateValue:any;
-  maxDateValue:any;
-  caseWorker:any;
-  firstName: any;
-  lastName:any; 
-  appointmentDate:any;
-  time:any;
- 
-  reason:any;
-  address:any;
-  city:any;
-  state:any;
-  zip:any;
-  coordinatorField:any;
-  nursingNotifiedField:any
-  byField:any;
-  dateApproved: any;
-  date:any;
+  public minDateValue: any;
+  public maxDateValue: any;
+  public caseWorker: any;
+  public firstName: any;
+  public lastName: any;
+  public appointmentDate: any;
+  public time: any;
+  public reason: any;
+  public address: any;
+  public city: any;
+  public state!: any[];
+  public zip: any;
+  public coordinatorField: any;
+  public nursingNotifiedField: any;
+  public byField: any;
+  public dateApproved: any;
+  public date: any;
 
-  constructor(private fb: FormBuilder,private service: TransportService) {
+  constructor(private fb: FormBuilder, private service: TransportService) {
     this.minDateValue = new Date(new Date().getTime());
     this.maxDateValue = new Date(new Date().getTime());
   }
 
-
   transportRequestForm!: FormGroup;
-
-  states = [
-    { name: 'California', code: 'CA' },
-    { name: 'Texas', code: 'TX' },
-  ];
 
   @HostListener('window:resize')
   onWindowResize() {
@@ -50,7 +46,6 @@ export class CwTransportRequestComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.onWindowResize();
 
     this.service.getTransportRequestFormData().subscribe((data) => {
@@ -67,16 +62,12 @@ export class CwTransportRequestComponent implements OnInit {
       this.state = this.caseWorker.state;
       this.zip = this.caseWorker.zip;
       this.dateApproved = this.caseWorker.dateApproved;
-     this.byField = this.caseWorker.byField;
+      this.byField = this.caseWorker.byField;
       this.date = this.caseWorker.dateApproved;
-     
+
       this.buildForm();
       console.log(this.transportRequestForm.value);
-     
-      
-
     });
-    
   }
 
   buildForm() {
@@ -96,17 +87,16 @@ export class CwTransportRequestComponent implements OnInit {
       by: ['', Validators.required],
       date: [this.date, Validators.required],
     });
-    
   }
 
-  get by(){
+  get by() {
     return this.transportRequestForm.get('by');
   }
 
-  get coordinator(){
+  get coordinator() {
     return this.transportRequestForm.get('coordinator');
   }
-  get nursingNotified(){
+  get nursingNotified() {
     return this.transportRequestForm.get('nursingNotified');
   }
 
@@ -118,23 +108,20 @@ export class CwTransportRequestComponent implements OnInit {
   //   return this.transportRequestForm.controls;
   // }
 
-  
-  
-
   onSubmit() {
     this.submitted = true;
-    if (this.transportRequestForm.valid) {
-      alert('Form Submitted succesfully!!!\n Check the values in browser console.');
-      console.table(this.transportRequestForm.value);
+    // if (this.transportRequestForm.valid) {
+    //   alert('Form Submitted succesfully!!!\n Check the values in browser console.');
+    // console.table(this.transportRequestForm.value);
     console.log(this.transportRequestForm.value);
-    
+
+    // }
   }
-}
   reset() {
-    this.transportRequestForm.controls['coordinator'].reset(), 
-    this.transportRequestForm.controls['approvedDate'].reset(),
-    this.transportRequestForm.controls['nursingNotified'].reset(),
-    this.transportRequestForm.controls['by'].reset(),
-    this.transportRequestForm.controls['date'].reset()
+    this.transportRequestForm.controls['coordinator'].reset(),
+      this.transportRequestForm.controls['approvedDate'].reset(),
+      this.transportRequestForm.controls['nursingNotified'].reset(),
+      this.transportRequestForm.controls['by'].reset(),
+      this.transportRequestForm.controls['date'].reset();
   }
 }

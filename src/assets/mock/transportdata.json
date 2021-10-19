@@ -8,9 +8,16 @@
   "nursingNotified": "",
   "address": "pqr",
   "city": "Mumbai",
-  "state": "California",
   "zip": "04050-1111",
   "dateApproved": "",
   "by": "",
-  "date": ""
+  "date": "",
+  "state": [
+    {
+      "name": "California"
+    },
+    {
+      "name": "Texas"
+    }
+  ]
 }
