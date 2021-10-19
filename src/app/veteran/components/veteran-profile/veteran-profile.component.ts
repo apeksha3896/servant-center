@@ -20,6 +20,10 @@ interface Relegion {
   name: string;
 }
 
+interface Race {
+  name : string;
+}
+
 interface Language {
   name: string;
 }
@@ -75,7 +79,7 @@ export class VeteranProfileComponent implements OnInit {
   pob: any;
   emailId: any;
   phoneNumber: any;
-  contactPersonFirstName: any;
+  cfirstName: any;
   contactPersonMiddleName: any;
   contactPersonLastName: any;
   address1: any;
@@ -89,10 +93,12 @@ export class VeteranProfileComponent implements OnInit {
   ssnNumber: any;
   hmisIdNo: any;
   primaryLanguage: any;
+  // races : any ;
   relegiousPreferences: any;
   hobbies: any;
   selectedRelationship: any;
   contactPersonCity: any;
+  
   contactPersonState: any;
   contactPersonZip: any;
   contactPersonPhoneNumber: any;
@@ -132,7 +138,7 @@ export class VeteranProfileComponent implements OnInit {
       this.intakeDOB = this.veteran.intakeDOB;
       this.veteranId = this.veteran.veteranId;
       this.firstName = this.veteran.firstName;
-      console.log(this.firstName)
+      console.log(this.firstName);
       this.middleName = this.veteran.middleName;
       this.lastName = this.veteran.lastName;
       this.nickName = this.veteran.nickName;
@@ -140,18 +146,17 @@ export class VeteranProfileComponent implements OnInit {
       this.pob = this.veteran.pob;
       this.emailId = this.veteran.emailId;
       this.phoneNumber = this.veteran.phoneNumber;
-      this.contactPersonFirstName = this.veteran.contactPersonFirstName;
+      this.cfirstName = this.veteran.contactPersonFirstName;
       this.contactPersonMiddleName = this.veteran.contactPersonMiddleName;
       this.contactPersonLastName = this.veteran.contactPersonLastName;
       this.address1 = this.veteran.address1;
-      console.log(this.address1)
+      console.log(this.address1);
       this.address2 = this.veteran.address2;
+      console.log(this.address2);
       this.country = this.veteran.country;
       this.city = this.veteran.city;
       this.state = this.veteran.state;
-
       this.zipCode = this.veteran.zipCode;
-
       this.ssnNumber = this.veteran.ssnNumber;
       this.hmisIdNo = this.veteran.hmisIdNo;
       this.race = this.veteran.race;
@@ -161,6 +166,7 @@ export class VeteranProfileComponent implements OnInit {
       this.contactPersonCity = this.veteran.contactPersonCity;
       this.contactPersonState = this.veteran.contactPersonState;
       this.contactPersonZip = this.veteran.contactPersonZip;
+      console.log(this.contactPersonZip);
       this.contactPersonHouseNumber = this.veteran.contactPersonHouseNumber;
       this.contactPersonPhoneNumber = this.veteran.contactPersonPhoneNumber;
       this.contactPersonRelationship = this.veteran.contactPersonRelationship;
@@ -203,7 +209,7 @@ export class VeteranProfileComponent implements OnInit {
       phoneNumber: [this.phoneNumber, Validators.required],
 
       cfirstName: [
-        this.contactPersonFirstName,
+        this.cfirstName,
         [Validators.required, Validators.minLength(3)],
       ],
       cmiddleName: [
@@ -232,8 +238,9 @@ export class VeteranProfileComponent implements OnInit {
       ],
       hmisIdNo: [this.hmisIdNo, [Validators.required, Validators.minLength(9)]],
 
+      selectedRace : [this.races, Validators.required],
       primaryLanguage: [this.language, Validators.required],
-      relegiousPreferences: [this.relegiousPreferences, Validators.required],
+      selectedRelegion: [this.relegiousPreferences, Validators.required],
       hobbies: [this.hobbies, Validators.required],
 
       cStreet: [this.contactPersonStreetName, Validators.required],
@@ -251,7 +258,7 @@ export class VeteranProfileComponent implements OnInit {
         this.contactPersonPhoneNumber,
         [Validators.required, Validators.minLength(10)],
       ],
-      selectedRace: [this.selectedRace, Validators.required],
+      selectedRace1: [this.selectedRace, Validators.required],
     });
   }
 
@@ -269,27 +276,32 @@ export class VeteranProfileComponent implements OnInit {
   }
 
   resetForm() {
-      // this.veteranProfileForm.controls['middleName'].reset(),
       this.veteranProfileForm.controls['firstName'].reset(this.firstName),
-      this.veteranProfileForm.controls['address2'].reset(),
-      this.veteranProfileForm.controls['address1'].reset(this.address1)
-      
-      // this.veteranProfileForm.controls['nickName'].reset();
-      // this.veteranProfileForm.controls['nursingNotified'].reset(),
-      // this.veteranProfileForm.controls['by'].reset(),
-      // this.veteranProfileForm.controls['date'].reset();
-      // this.veteranProfileForm.controls['nursingNotified'].reset(),
-      // this.veteranProfileForm.controls['by'].reset(),
-      // this.veteranProfileForm.controls['date'].reset();
-      // this.veteranProfileForm.controls['nursingNotified'].reset(),
-      // this.veteranProfileForm.controls['by'].reset(),
-      // this.veteranProfileForm.controls['date'].reset();
-      // this.veteranProfileForm.controls['nursingNotified'].reset(),
-      // this.veteranProfileForm.controls['by'].reset(),
-      // this.veteranProfileForm.controls['date'].reset();
-      // this.veteranProfileForm.controls['nursingNotified'].reset(),
-      // this.veteranProfileForm.controls['by'].reset(),
-      // this.veteranProfileForm.controls['date'].reset();
-      
+      this.veteranProfileForm.controls['nickName'].reset(this.nickName),
+      this.veteranProfileForm.controls['lastName'].reset(this.lastName),
+      this.veteranProfileForm.controls['middleName'].reset(this.middleName),
+      this.veteranProfileForm.controls['DOB'].reset(this.dob);
+      this.veteranProfileForm.controls['POB'].reset(this.pob),
+      this.veteranProfileForm.controls['emailId'].reset(this.emailId),
+      this.veteranProfileForm.controls['phoneNumber'].reset(this.phoneNumber),
+      this.veteranProfileForm.controls['contactPersonFirstName'].reset(this.cfirstName),
+      this.veteranProfileForm.controls['contactPersonMiddleName'].reset(this.contactPersonMiddleName),
+      this.veteranProfileForm.controls['contactPersonLastName'].reset(this.contactPersonLastName),
+      this.veteranProfileForm.controls['contactPersonState'].reset(this.contactPersonState),
+      this.veteranProfileForm.controls['contactPersonStreetName'].reset(this.contactPersonStreetName),
+      this.veteranProfileForm.controls['contactPersonRelationship'].reset(this.contactPersonRelationship),
+      this.veteranProfileForm.controls['contactPersonPhoneNumber'].reset(this.contactPersonPhoneNumber),
+      this.veteranProfileForm.controls['contactPersonZip'].reset(this.contactPersonZip),
+      this.veteranProfileForm.controls['hobbies'].reset(this.hobbies),
+      this.veteranProfileForm.controls['contactPersonCity'].reset(this.contactPersonZip),
+      this.veteranProfileForm.controls['hmisIdNo'].reset(this.hmisIdNo),
+      this.veteranProfileForm.controls['ssnNumber'].reset(this.ssnNumber),
+      this.veteranProfileForm.controls['relegiousPreferences'].reset(this.relegiousPreferences),
+      this.veteranProfileForm.controls['race'].reset(this.race),
+      this.veteranProfileForm.controls['city'].reset(this.city),
+      this.veteranProfileForm.controls['address1'].reset(this.address1),
+      this.veteranProfileForm.controls['address2'].reset(this.address2),
+      this.veteranProfileForm.controls['state'].reset(this.state),
+      this.veteranProfileForm.controls['zipCode'].reset(this.zipCode)
   }
 }
