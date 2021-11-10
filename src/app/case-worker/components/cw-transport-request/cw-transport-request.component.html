@@ -3,49 +3,59 @@
   title="TRANSPORTATION REQUEST FORM"
 ></app-item-header>
 <div class="form-container">
-  <form [formGroup]="transportRequestForm" (ngSubmit)="onSubmit()">
+  <form
+    *ngIf="transportRequestForm"
+    [formGroup]="transportRequestForm"
+    (ngSubmit)="onSubmit()"
+  >
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-12 p-md-3">
         <input
           type="text"
+          id="firstName"
           pInputText
           formControlName="firstName"
-          value="{{ caseWorker.firstName }}"
+          value="{{ caseWorker?.firstName }}"
           class="disable"
           placeholder="Resident's First Name"
         />
+        <label for="firstName"></label>
       </div>
       <div class="p-field p-col-12 p-md-3">
         <input
           type="text"
+          id="lastName"
           pInputText
           formControlName="lastName"
-          value="{{ caseWorker.lastName }}"
+          value="{{ caseWorker?.lastName }}"
           class="disable"
           placeholder="Resident's Last Name"
         />
+        <label for="lastName"></label>
       </div>
       <div class="p-field p-col-12 p-md-4">
         <p-calendar
+          id="appointmentDate"
           formControlName="appointmentDate"
           [touchUI]="mobileMode"
           [readonlyInput]="mobileMode"
           [inline]="false"
-          [showIcon]="true"
           class="disable"
           placeholder="Appointment Date (mm/dd/yyyy)"
         ></p-calendar>
+        <label for="appointmentDate"></label>
       </div>
       <div class="p-field p-col-12 p-md-2">
         <p-calendar
+          id="time"
           formControlName="time"
           [timeOnly]="true"
           placeholder="Time"
-          [showIcon]="true"
           class="disable"
           icon="pi pi-angle-down"
         >
         </p-calendar>
+        <label for="time"></label>
       </div>
     </div>
     <p-divider></p-divider>
@@ -54,14 +64,16 @@
         <div class="p-fluid p-formgrid p-grid">
           <div class="p-field p-col-12">
             <textarea
+              id="reason"
               pInputTextarea
               formControlName="reason"
               [rows]="6"
               class="address-text-area"
-              value="{{ caseWorker?.reason }}"
+              value="{{ caseWorker.reason }}"
               class="disable"
               placeholder="Reason for request"
             ></textarea>
+            <label for="reason"></label>
           </div>
           <div class="p-field p-col-12">
             <input
@@ -124,7 +136,7 @@
           <div class="p-field p-col-4 p-md-3">
             <p-dropdown
               formControlName="state"
-              [options]="state"
+              [options]="optionState"
               optionLabel="name"
               class="disable"
             ></p-dropdown>
@@ -146,11 +158,15 @@
               [touchUI]="mobileMode"
               [readonlyInput]="mobileMode"
               [inline]="false"
-              [showIcon]="true"
               [minDate]="minDateValue"
               [maxDate]="maxDateValue"
               placeholder="Date Approved"
             ></p-calendar>
+            <small
+              class="error"
+              *ngIf="approvedDate?.invalid && approvedDate?.touched"
+              >approved date is required.</small
+            >
           </div>
           <div class="p-field p-col-12 p-md-5">
             <input
@@ -177,6 +193,9 @@
               [minDate]="minDateValue"
               placeholder="Date"
             ></p-calendar>
+            <small class="error" *ngIf="date?.invalid && date?.touched"
+              >date is required.</small
+            >
           </div>
         </div>
       </div>

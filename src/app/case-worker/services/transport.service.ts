@@ -11,4 +11,10 @@ export class TransportService {
   getTransportRequestFormData() {
     return this.http.get('./assets/mock/transportdata.json');
   }
+
+  // getTableData() {
+  //     return this.http.get('./assets/mock/tableValues.json');
+  //     // let url="https://jsonplaceholder.typicode.com/todos/";
+  //     // return this.http.get(url);
+  //   }
 }
